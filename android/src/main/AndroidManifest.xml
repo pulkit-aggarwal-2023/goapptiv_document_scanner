@@ -5,6 +5,26 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera"
         android:required="true" />
-    <application android:theme="@style/Theme.AppCompat.NoActionBar">
-    </application>
+
+        <uses-permission
+            android:name="android.permission.FLASHLIGHT"
+            android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+            android:protectionLevel="normal"
+            android:maxSdkVersion="30"/>
+
+        <application
+            android:allowBackup="true"
+            android:requestLegacyExternalStorage="true"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+            <activity
+                android:name=".scan.ScanActivity"
+                android:launchMode="singleTask"
+                android:screenOrientation="portrait" />
+            <activity
+                android:name=".crop.CropActivity"
+                android:launchMode="singleTask"
+                android:screenOrientation="portrait" />
+        </application>
+
 </manifest>

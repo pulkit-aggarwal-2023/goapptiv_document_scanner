@@ -41,10 +41,11 @@ class _MyAppState extends State<MyApp> {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () async {
-                    final filePath = await GoapptivDocumentScanner.getPicture();
-                    if (filePath != null) {
-                      log(filePath);
-                      imageFile = File(filePath);
+                    final imagePath =
+                        await GoapptivDocumentScanner.getPicture();
+                    if (imagePath != null) {
+                      log(imagePath);
+                      imageFile = File(imagePath);
                       setState(() {});
                     }
                   },

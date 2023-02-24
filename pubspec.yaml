@@ -12,6 +12,9 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
   permission_handler: ^10.0.0
+  path_provider: ^2.0.13
+  path: ^1.8.2
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:
@@ -42,7 +45,7 @@ flutter:
     # -------------------
       android:
         package: com.goapptiv.goapptiv_document_scanner
-        pluginClass: GoapptivDocumentScannerPlugin
+        pluginClass: EdgeDetectionPlugin
       ios:
         pluginClass: GoapptivDocumentScannerPlugin
     # -------------------
