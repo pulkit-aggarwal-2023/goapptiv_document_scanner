@@ -25,7 +25,7 @@ public class SwiftGoapptivDocumentScannerPlugin: NSObject, FlutterPlugin {
         typealias channelMethod = () -> ()
         var channelMethods : Dictionary = [String : channelMethod]()
         channelMethods["getPicture"] = camera
-        channelMethods["gallery"] = gallery
+        channelMethods["getPictureFromGallery"] = gallery
         if(!channelMethods.keys.contains(call.method)){
             result(FlutterMethodNotImplemented)
         }

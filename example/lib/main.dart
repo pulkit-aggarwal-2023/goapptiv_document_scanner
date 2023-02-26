@@ -53,6 +53,22 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
+            Flexible(
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final imagePath =
+                        await GoapptivDocumentScanner.getPictureFromGallery();
+                    if (imagePath != null) {
+                      log(imagePath);
+                      imageFile = File(imagePath);
+                      setState(() {});
+                    }
+                  },
+                  child: const Text('Take Pic'),
+                ),
+              ),
+            ),
           ],
         ),
       ),

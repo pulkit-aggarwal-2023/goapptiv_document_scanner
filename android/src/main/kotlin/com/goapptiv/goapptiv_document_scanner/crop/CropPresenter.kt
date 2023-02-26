@@ -77,6 +77,7 @@ class CropPresenter(
             }
     }
 
+    @SuppressLint("CheckResult")
     fun enhance() {
         if (croppedBitmap == null) {
             Log.i(TAG, "picture null?")

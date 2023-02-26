@@ -30,6 +30,7 @@ import java.io.InputStream
 class ScanActivity : BaseActivity(), IScanView.Proxy {
 
     private lateinit var mPresenter: ScanPresenter;
+    private lateinit var  initialBundle:Bundle;
 
     override fun provideContentViewId(): Int = R.layout.activity_scan
 
@@ -61,7 +62,7 @@ class ScanActivity : BaseActivity(), IScanView.Proxy {
             mPresenter.toggleFlash();
         }
 
-        val initialBundle = intent.getBundleExtra(EdgeDetectionHandler.INITIAL_BUNDLE) as Bundle;
+        initialBundle = intent.getBundleExtra(EdgeDetectionHandler.INITIAL_BUNDLE) as Bundle;
         // NullPointerException here in case directly FROM_GALLERY
         if(! initialBundle.containsKey(EdgeDetectionHandler.FROM_GALLERY)){
             this.title = initialBundle.getString(EdgeDetectionHandler.SCAN_TITLE) as String
@@ -108,6 +109,16 @@ class ScanActivity : BaseActivity(), IScanView.Proxy {
 
     override fun exit() {
         finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (initialBundle.containsKey(EdgeDetectionHandler.FROM_GALLERY) && initialBundle.getBoolean(
+                EdgeDetectionHandler.FROM_GALLERY,
+                false
+            )){
+            finish();
+            }
     }
 
     override fun getCurrentDisplay(): Display? {

@@ -11,4 +11,8 @@ class GoapptivDocumentScanner {
   static Future<String?> getPicture() {
     return GoapptivDocumentScannerPlatform.instance.getPicture();
   }
+
+  static Future<String?> getPictureFromGallery() {
+    return GoapptivDocumentScannerPlatform.instance.getPictureFromGallery();
+  }
 }

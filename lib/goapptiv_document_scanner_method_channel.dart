@@ -22,6 +22,7 @@ class MethodChannelGoapptivDocumentScanner
   Future<String?> getPicture() async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
+      Permission.storage,
     ].request();
     if (statuses.containsValue(PermissionStatus.denied)) {
       throw Exception("Permission not granted");
@@ -40,6 +41,35 @@ class MethodChannelGoapptivDocumentScanner
       return pictures == false ? null : imagePath;
     } else {
       final String? filePath = await methodChannel.invokeMethod("getPicture");
+      return filePath?.split('file://')[1];
+    }
+  }
+
+  @override
+  Future<String?> getPictureFromGallery() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.storage,
+    ].request();
+    if (statuses.containsValue(PermissionStatus.denied)) {
+      throw Exception("Permission not granted");
+    }
+    if (Platform.isAndroid) {
+      final imagePath = join(
+          (await getApplicationSupportDirectory()).path, "${_uuid.v4()}.jpg");
+      final dynamic pictures =
+          await methodChannel.invokeMethod('getPictureFromGallery', {
+        'save_to': imagePath,
+        'scan_title': 'Scanning',
+        'crop_title': 'Crop',
+        'crop_black_white_title': 'Black & White',
+        'crop_reset_title': 'Reset',
+        'from_gallery': true,
+      });
+      return pictures == false ? null : imagePath;
+    } else {
+      final String? filePath =
+          await methodChannel.invokeMethod("getPictureFromGallery");
       return filePath?.split('file://')[1];
     }
   }
