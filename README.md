@@ -7,11 +7,10 @@ A Document scanner plugin for scanning of invoice and KYC documents with edge de
 Get the package
 
 ```yaml
-  goapptiv_document_scanner
-    git:
-        url: https://github.com/Biswajit-Paul-2021/goapptiv_document_scanner.git
-        ref: master
-
+goapptiv_document_scanner:
+  git:
+    url: https://github.com/Biswajit-Paul-2021/goapptiv_document_scanner.git
+    ref: master
 ```
 
 ## Usage/Examples
@@ -54,10 +53,10 @@ Please check the latest version before installation.
 dependencies:
   flutter:
     sdk: flutter
-  goapptiv_document_scanner
+  goapptiv_document_scanner:
     git:
-        url: https://github.com/Biswajit-Paul-2021/goapptiv_document_scanner.git
-        ref: master
+      url: https://github.com/Biswajit-Paul-2021/goapptiv_document_scanner.git
+      ref: master
 ```
 
 ### Add the following imports to your Dart code:
