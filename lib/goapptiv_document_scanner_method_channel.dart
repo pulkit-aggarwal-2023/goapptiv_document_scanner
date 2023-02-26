@@ -30,8 +30,8 @@ class MethodChannelGoapptivDocumentScanner
       throw Exception("Permission not granted");
     }
     if (Platform.isAndroid) {
-      final imagePath = join(
-          (await getApplicationSupportDirectory()).path, "${_uuid.v4()}.jpg");
+      final imagePath =
+          join((await getTemporaryDirectory()).path, "${_uuid.v4()}.jpg");
       final dynamic pictures = await methodChannel.invokeMethod('getPicture', {
         'save_to': imagePath,
         'scan_title': options.scanTitle,
@@ -57,8 +57,8 @@ class MethodChannelGoapptivDocumentScanner
       throw Exception("Permission not granted");
     }
     if (Platform.isAndroid) {
-      final imagePath = join(
-          (await getApplicationSupportDirectory()).path, "${_uuid.v4()}.jpg");
+      final imagePath =
+          join((await getTemporaryDirectory()).path, "${_uuid.v4()}.jpg");
       final dynamic pictures =
           await methodChannel.invokeMethod('getPictureFromGallery', {
         'save_to': imagePath,
