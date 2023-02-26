@@ -64,9 +64,10 @@ class ScanActivity : BaseActivity(), IScanView.Proxy {
 
         initialBundle = intent.getBundleExtra(EdgeDetectionHandler.INITIAL_BUNDLE) as Bundle;
         // NullPointerException here in case directly FROM_GALLERY
-        if(! initialBundle.containsKey(EdgeDetectionHandler.FROM_GALLERY)){
-            this.title = initialBundle.getString(EdgeDetectionHandler.SCAN_TITLE) as String
-        }
+//        if(! initialBundle.containsKey(EdgeDetectionHandler.FROM_GALLERY)){
+//
+//        }
+        this.title = initialBundle.getString(EdgeDetectionHandler.SCAN_TITLE) as String
         //
         gallery.visibility =
             if (initialBundle.getBoolean(EdgeDetectionHandler.CAN_USE_GALLERY, true))
@@ -109,16 +110,6 @@ class ScanActivity : BaseActivity(), IScanView.Proxy {
 
     override fun exit() {
         finish()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if (initialBundle.containsKey(EdgeDetectionHandler.FROM_GALLERY) && initialBundle.getBoolean(
-                EdgeDetectionHandler.FROM_GALLERY,
-                false
-            )){
-            finish();
-            }
     }
 
     override fun getCurrentDisplay(): Display? {

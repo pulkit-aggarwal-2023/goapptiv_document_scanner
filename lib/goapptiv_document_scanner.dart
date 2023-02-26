@@ -5,14 +5,18 @@
 // platforms in the `pubspec.yaml` at
 // https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms.
 
+import 'package:goapptiv_document_scanner/android_options.dart';
+
 import 'goapptiv_document_scanner_platform_interface.dart';
 
 class GoapptivDocumentScanner {
-  static Future<String?> getPicture() {
-    return GoapptivDocumentScannerPlatform.instance.getPicture();
+  static Future<String?> getPicture({AndroidOptions? options}) {
+    return GoapptivDocumentScannerPlatform.instance
+        .getPicture(options: options ?? const AndroidOptions());
   }
 
-  static Future<String?> getPictureFromGallery() {
-    return GoapptivDocumentScannerPlatform.instance.getPictureFromGallery();
+  static Future<String?> getPictureFromGallery({AndroidOptions? options}) {
+    return GoapptivDocumentScannerPlatform.instance
+        .getPictureFromGallery(options: options ?? const AndroidOptions());
   }
 }

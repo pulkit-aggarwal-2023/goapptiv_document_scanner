@@ -1,3 +1,4 @@
+import 'package:goapptiv_document_scanner/android_options.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'goapptiv_document_scanner_method_channel.dart';
@@ -24,11 +25,13 @@ abstract class GoapptivDocumentScannerPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPicture() {
+  Future<String?> getPicture(
+      {AndroidOptions options = const AndroidOptions()}) {
     throw UnimplementedError('getPicture() has not been implemented.');
   }
 
-  Future<String?> getPictureFromGallery() {
+  Future<String?> getPictureFromGallery(
+      {AndroidOptions options = const AndroidOptions()}) {
     throw UnimplementedError('getPicture() has not been implemented.');
   }
 }

@@ -61,7 +61,7 @@ class EdgeDetectionHandler : MethodCallHandler, PluginRegistry.ActivityResultLis
             getActivity() == null -> {
                 result.error(
                     "no_activity",
-                    "edge_detection plugin requires a foreground activity.",
+                    "goapptiv_document_scanner plugin requires a foreground activity.",
                     null
                 )
                 return
@@ -111,7 +111,7 @@ class EdgeDetectionHandler : MethodCallHandler, PluginRegistry.ActivityResultLis
             call.argument<String>(CROP_BLACK_WHITE_TITLE) as String
         )
         bundle.putString(CROP_RESET_TITLE, call.argument<String>(CROP_RESET_TITLE) as String)
-        bundle.putBoolean(CAN_USE_GALLERY, call.argument<Boolean>(CAN_USE_GALLERY) as Boolean)
+        bundle.putBoolean(CAN_USE_GALLERY, false)
         initialIntent.putExtra(INITIAL_BUNDLE, bundle)
         getActivity()?.startActivityForResult(initialIntent, REQUEST_CODE)
     }
@@ -124,6 +124,7 @@ class EdgeDetectionHandler : MethodCallHandler, PluginRegistry.ActivityResultLis
         val initialIntent =
             Intent(Intent(getActivity()?.applicationContext, ScanActivity::class.java))
         val bundle = Bundle();
+        bundle.putString(SCAN_TITLE,call.argument<String>(SCAN_TITLE) as String)
         bundle.putString(SAVE_TO, call.argument<String>(SAVE_TO) as String)
         bundle.putString(CROP_TITLE, call.argument<String>(CROP_TITLE) as String)
         bundle.putString(
