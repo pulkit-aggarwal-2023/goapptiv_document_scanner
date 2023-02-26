@@ -49,7 +49,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    // implementation 'com.websitebeaver:documentscanner:1.0.5'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.github.davidmigloz:opencv-android-gradle-repo:3.3.0'
     implementation "io.reactivex.rxjava2:rxjava:2.2.6"

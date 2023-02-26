@@ -11,7 +11,7 @@ A new flutter plugin project.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Cunning GmbH' => 'BiswajitP' }
+  s.author           = { 'Goapptiv' => 'BiswajitP' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
