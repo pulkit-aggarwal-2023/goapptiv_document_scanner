@@ -1,18 +1,88 @@
-# goapptiv_document_scanner
+# GoApptiv Document Scanner
 
-A new Flutter plugin project.
+A Document scanner plugin for scanning of invoice and KYC documents with edge detection and cropping facility.
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+Get the package
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```yaml
+  goapptiv_document_scanner
+    git:
+        url: https://github.com/Biswajit-Paul-2021/goapptiv_document_scanner.git
+        ref: master
 
-The plugin project was generated without specifying the `--platforms` flag, no platforms are currently supported.
-To add platforms, run `flutter create -t plugin --platforms <platforms> .` in this directory.
-You can also find a detailed instruction on how to add platforms in the `pubspec.yaml` at https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms.
+```
+
+## Usage/Examples
+
+### iOS
+
+iOS 10.0 or higher is needed to use the plugin. Change the minimum platform version to 10 (or higher) in your `ios/Podfile` file.
+
+Add below permission to the `ios/Runner/Info.plist`:
+
+- one with the key `Privacy - Camera Usage Description` and a usage description.
+
+Or in text format add the key:
+
+```xml
+<key>NSCameraUsageDescription</key>
+<string>Can I use the camera please?</string>
+```
+
+### Android
+
+The plugin code is written in kotlin 1.7.10 so the same has to be set to the android project of yours for compilation.
+Change the kotlin_version to 1.5.31 in your `android/build.gradle` file.
+
+```
+ext.kotlin_version = '1.7.10'
+```
+
+Change the minimum Android SDK version to 21 (or higher) in your `android/app/build.gradle` file.
+
+```
+minSdkVersion 21
+```
+
+### Add dependency：
+
+Please check the latest version before installation.
+
+```
+dependencies:
+  flutter:
+    sdk: flutter
+  goapptiv_document_scanner
+    git:
+        url: https://github.com/Biswajit-Paul-2021/goapptiv_document_scanner.git
+        ref: master
+```
+
+### Add the following imports to your Dart code:
+
+```
+import 'package:edge_detection/edge_detection.dart';
+```
+
+```dart
+    // Use below code for taking image from camera.
+try {
+    //Make sure to await the call to GetPicture.
+    final imagePath = await  await GoapptivDocumentScanner.getPicture();
+} catch (e) {
+    print(e);
+}
+// Use below code for selecting directly from the gallery.
+try {
+    //Make sure to await the call to getPictureFromGallery.
+    final imagePath = await  await GoapptivDocumentScanner.getPictureFromGallery();
+} catch (e) {
+    print(e);
+}
+```
+
+## Authors
+
+- [@BiswajitP](https://github.com/Biswajit-Paul-2021)
