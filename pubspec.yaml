@@ -45,7 +45,7 @@ flutter:
     # -------------------
       android:
         package: com.goapptiv.goapptiv_document_scanner
-        pluginClass: EdgeDetectionPlugin
+        pluginClass: GoapptivDocumentScanner
       ios:
         pluginClass: GoapptivDocumentScannerPlugin
     # -------------------

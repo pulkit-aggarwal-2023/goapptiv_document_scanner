@@ -13,7 +13,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
 
-class EdgeDetectionPlugin : FlutterPlugin, ActivityAware {
+class GoapptivDocumentScanner : FlutterPlugin, ActivityAware {
     private var handler: EdgeDetectionHandler? = null
 
     override fun onAttachedToEngine(binding: FlutterPluginBinding) {
@@ -69,7 +69,7 @@ class EdgeDetectionHandler : MethodCallHandler, PluginRegistry.ActivityResultLis
             call.method.equals("getPicture") -> {
                 openCameraActivity(call, result)
             }
-            call.method.equals("edge_detect_gallery") -> {
+            call.method.equals("getPictureFromGallery") -> {
                 openGalleryActivity(call, result)
             }
             else -> {
@@ -149,7 +149,7 @@ class EdgeDetectionHandler : MethodCallHandler, PluginRegistry.ActivityResultLis
     }
 
     private fun finishWithAlreadyActiveError() {
-        finishWithError("already_active", "Edge detection is already active")
+        finishWithError("already_active", "Goapptiv Scanner is already active")
     }
 
     private fun finishWithError(errorCode: String, errorMessage: String) {
