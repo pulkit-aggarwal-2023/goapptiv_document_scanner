@@ -61,8 +61,8 @@ dependencies:
 
 ### Add the following imports to your Dart code:
 
-```
-import 'package:edge_detection/edge_detection.dart';
+```dart
+import 'package:goapptiv_document_scanner/goapptiv_document_scanner.dart';
 ```
 
 ```dart
