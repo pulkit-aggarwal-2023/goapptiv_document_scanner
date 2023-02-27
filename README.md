@@ -69,14 +69,14 @@ import 'package:goapptiv_document_scanner/goapptiv_document_scanner.dart';
     // Use below code for taking image from camera.
 try {
     //Make sure to await the call to GetPicture.
-    final imagePath = await  await GoapptivDocumentScanner.getPicture();
+    final imagePath = await GoapptivDocumentScanner.getPicture();
 } catch (e) {
     print(e);
 }
 // Use below code for selecting directly from the gallery.
 try {
     //Make sure to await the call to getPictureFromGallery.
-    final imagePath = await  await GoapptivDocumentScanner.getPictureFromGallery();
+    final imagePath = await GoapptivDocumentScanner.getPictureFromGallery();
 } catch (e) {
     print(e);
 }
