@@ -33,7 +33,7 @@ Or in text format add the key:
 ### Android
 
 The plugin code is written in kotlin 1.7.10 so the same has to be set to the android project of yours for compilation.
-Change the kotlin_version to 1.5.31 in your `android/build.gradle` file.
+Change the kotlin_version to 1.7.10 in your `android/build.gradle` file.
 
 ```
 ext.kotlin_version = '1.7.10'
