@@ -9,8 +9,8 @@ Get the package
 ```yaml
 goapptiv_document_scanner:
   git:
-    url: https://github.com/Biswajit-Paul-2021/goapptiv_document_scanner.git
-    ref: master
+    url: https://github.com/GoApptiv/goapptiv_document_scanner.git
+    ref: main
 ```
 
 ## Usage/Examples
@@ -55,8 +55,8 @@ dependencies:
     sdk: flutter
   goapptiv_document_scanner:
     git:
-      url: https://github.com/Biswajit-Paul-2021/goapptiv_document_scanner.git
-      ref: master
+      url: https://github.com/GoApptiv/goapptiv_document_scanner.git
+      ref: main
 ```
 
 ### Add the following imports to your Dart code:
