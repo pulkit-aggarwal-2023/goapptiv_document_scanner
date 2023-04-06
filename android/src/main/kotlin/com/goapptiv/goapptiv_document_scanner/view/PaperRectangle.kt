@@ -46,7 +46,7 @@ class PaperRectangle : View {
         rectPaint.strokeCap = Paint.Cap.ROUND      // set the paint cap to round too
         rectPaint.pathEffect = CornerPathEffect(10f)
 
-        circlePaint.color = Color.WHITE
+        circlePaint.color = Color.BLUE
         circlePaint.isDither = true
         circlePaint.isAntiAlias = true
         circlePaint.strokeWidth = 4F
@@ -119,7 +119,7 @@ class PaperRectangle : View {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        rectPaint.color = Color.WHITE
+        rectPaint.color = Color.BLUE
         rectPaint.strokeWidth = 6F
         rectPaint.style = Paint.Style.STROKE
         canvas?.drawPath(path, rectPaint)
