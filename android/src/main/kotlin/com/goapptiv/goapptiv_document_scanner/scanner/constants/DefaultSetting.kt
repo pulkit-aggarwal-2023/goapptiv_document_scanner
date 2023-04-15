@@ -1,6 +1,8 @@
 package com.goapptiv.goapptiv_document_scanner.scanner.constants
 
-/** This class contains default document scanner options */
+/**
+ * This class contains default document scanner options
+ */
 class DefaultSetting {
     companion object {
         const val CROPPED_IMAGE_QUALITY = 100
