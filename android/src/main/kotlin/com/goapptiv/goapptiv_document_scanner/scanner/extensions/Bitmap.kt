@@ -14,11 +14,8 @@ import kotlin.math.sqrt
  */
 fun Bitmap.toBase64(quality: Int): String {
     val byteArrayOutputStream = ByteArrayOutputStream()
-    compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream)
-    return Base64.encodeToString(
-        byteArrayOutputStream.toByteArray(),
-        Base64.DEFAULT
-    )
+    // compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream)
+    return Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT)
 }
 
 /**
@@ -28,7 +25,7 @@ fun Bitmap.toBase64(quality: Int): String {
  */
 fun Bitmap.saveToFile(file: File, quality: Int) {
     val fileOutputStream = FileOutputStream(file)
-    compress(Bitmap.CompressFormat.JPEG, quality, fileOutputStream)
+    // compress(Bitmap.CompressFormat.JPEG, quality, fileOutputStream)
     fileOutputStream.close()
 }
 
@@ -39,10 +36,5 @@ fun Bitmap.saveToFile(file: File, quality: Int) {
  */
 fun Bitmap.changeByteCountByResizing(targetBytes: Int): Bitmap {
     val scale = sqrt(targetBytes.toDouble() / byteCount.toDouble())
-    return Bitmap.createScaledBitmap(
-        this,
-        (width * scale).toInt(),
-        (height * scale).toInt(),
-        true
-    )
+    return Bitmap.createScaledBitmap(this, (width * scale).toInt(), (height * scale).toInt(), true)
 }
