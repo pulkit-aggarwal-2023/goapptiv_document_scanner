@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner.constants
+package com.goapptiv.goapptiv_document_scanner.scanner.constants
 
 /**
  * constants that represent all possible document scanner response formats

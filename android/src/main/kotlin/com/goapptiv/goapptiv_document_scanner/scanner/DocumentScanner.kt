@@ -1,15 +1,15 @@
-package com.websitebeaver.documentscanner
+package com.goapptiv.goapptiv_document_scanner.scanner
 
 import android.app.Activity
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import com.websitebeaver.documentscanner.constants.DefaultSetting
-import com.websitebeaver.documentscanner.constants.DocumentScannerExtra
-import com.websitebeaver.documentscanner.constants.ResponseType
-import com.websitebeaver.documentscanner.extensions.toBase64
-import com.websitebeaver.documentscanner.utils.ImageUtil
+import com.goapptiv.goapptiv_document_scanner.scanner.constants.DefaultSetting
+import com.goapptiv.goapptiv_document_scanner.scanner.constants.DocumentScannerExtra
+import com.goapptiv.goapptiv_document_scanner.scanner.constants.ResponseType
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.toBase64
+import com.goapptiv.goapptiv_document_scanner.scanner.utils.ImageUtil
 import java.io.File
 
 /**

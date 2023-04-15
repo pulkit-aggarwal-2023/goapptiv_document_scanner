@@ -1,7 +1,6 @@
-package com.websitebeaver.documentscanner.extensions
+package com.goapptiv.goapptiv_document_scanner.scanner.extensions
 
 import android.graphics.Rect
-import android.util.DisplayMetrics
 import androidx.appcompat.app.AppCompatActivity
 
 @Suppress("DEPRECATION")

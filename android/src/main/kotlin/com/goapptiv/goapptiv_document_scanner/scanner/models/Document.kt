@@ -1,4 +1,5 @@
-package com.websitebeaver.documentscanner.models
+package com.goapptiv.goapptiv_document_scanner.scanner.models
+
 
 /**
  * This class contains the original document photo, and a cropper. The user can drag the corners

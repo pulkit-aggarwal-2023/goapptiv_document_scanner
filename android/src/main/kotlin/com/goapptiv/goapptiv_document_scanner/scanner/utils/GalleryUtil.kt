@@ -1,14 +1,11 @@
-package com.websitebeaver.documentscanner.utils
+package com.goapptiv.goapptiv_document_scanner.scanner.utils
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import com.websitebeaver.documentscanner.extensions.saveToFile
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.saveToFile
 import java.io.IOException
 import java.io.File
 

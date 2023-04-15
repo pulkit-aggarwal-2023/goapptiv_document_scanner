@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner.extensions
+package com.goapptiv.goapptiv_document_scanner.scanner.extensions
 
 import android.graphics.Bitmap
 import android.util.Base64

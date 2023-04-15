@@ -1,12 +1,12 @@
-package com.websitebeaver.documentscanner.utils
+package com.goapptiv.goapptiv_document_scanner.scanner.utils
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import com.websitebeaver.documentscanner.extensions.distance
-import com.websitebeaver.documentscanner.extensions.toOpenCVPoint
-import com.websitebeaver.documentscanner.models.Quad
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.distance
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.toOpenCVPoint
+import com.goapptiv.goapptiv_document_scanner.scanner.models.Quad
 import kotlin.math.min
 import org.opencv.android.Utils
 import org.opencv.core.Mat

@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner.enums
+package com.goapptiv.goapptiv_document_scanner.scanner.enums
 
 /**
  * enums for all 4 quad corners

@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner.constants
+package com.goapptiv.goapptiv_document_scanner.scanner.constants
 
 /**
  * This class contains default document scanner options

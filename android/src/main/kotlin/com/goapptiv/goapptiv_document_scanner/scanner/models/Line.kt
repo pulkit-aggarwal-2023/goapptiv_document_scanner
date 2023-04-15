@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner.models
+package com.goapptiv.goapptiv_document_scanner.scanner.models
 
 import android.graphics.PointF
 

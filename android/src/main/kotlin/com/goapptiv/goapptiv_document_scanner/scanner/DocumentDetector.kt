@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner
+package com.goapptiv.goapptiv_document_scanner.scanner
 
 import android.graphics.Bitmap
 import org.opencv.android.Utils

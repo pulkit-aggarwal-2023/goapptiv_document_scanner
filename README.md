@@ -82,17 +82,6 @@ try {
 }
 ```
 
-## Android Options
-
-#### For changing the titles
-
-| Parameter            | Type     | Description                                | Default           |
-| :------------------- | :------- | :----------------------------------------- | :---------------- |
-| `scanTitle`          | `string` | **Optional**. Scan Title                   | `Scan Image`      |
-| `cropTitle`          | `string` | **Optional**. Crop Title                   | `Crop Image`      |
-| `blackAndWhiteTitle` | `string` | **Optional**. Black And White Option Title | `Black And White` |
-| `resetTitle`         | `string` | **Optional**. Reset Image Title            | `Reset Image`     |
-
 ## Authors
 
 - [@BiswajitP](https://github.com/Biswajit-Paul-2021)

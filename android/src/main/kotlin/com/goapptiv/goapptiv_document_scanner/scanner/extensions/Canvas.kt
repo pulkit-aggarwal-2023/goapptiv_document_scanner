@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner.extensions
+package com.goapptiv.goapptiv_document_scanner.scanner.extensions
 
 import android.graphics.Canvas
 import android.graphics.Matrix
@@ -6,9 +6,9 @@ import android.graphics.Paint
 import android.graphics.PointF
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
-import com.websitebeaver.documentscanner.enums.QuadCorner
-import com.websitebeaver.documentscanner.models.Line
-import com.websitebeaver.documentscanner.models.Quad
+import com.goapptiv.goapptiv_document_scanner.scanner.enums.QuadCorner
+import com.goapptiv.goapptiv_document_scanner.scanner.models.Line
+import com.goapptiv.goapptiv_document_scanner.scanner.models.Quad
 
 /**
  * This draws a quad (used to draw cropper). It draws 4 circles and

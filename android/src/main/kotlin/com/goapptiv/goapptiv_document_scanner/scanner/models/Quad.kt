@@ -1,12 +1,12 @@
-package com.websitebeaver.documentscanner.models
+package com.goapptiv.goapptiv_document_scanner.scanner.models
 
 import android.graphics.PointF
 import android.graphics.RectF
-import com.websitebeaver.documentscanner.enums.QuadCorner
-import com.websitebeaver.documentscanner.extensions.distance
-import com.websitebeaver.documentscanner.extensions.move
-import com.websitebeaver.documentscanner.extensions.multiply
-import com.websitebeaver.documentscanner.extensions.toPointF
+import com.goapptiv.goapptiv_document_scanner.scanner.enums.QuadCorner
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.distance
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.move
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.multiply
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.toPointF
 import org.opencv.core.Point
 
 /**

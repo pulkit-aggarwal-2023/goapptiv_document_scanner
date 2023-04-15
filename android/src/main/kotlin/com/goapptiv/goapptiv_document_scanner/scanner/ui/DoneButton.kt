@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner.ui
+package com.goapptiv.goapptiv_document_scanner.scanner.ui
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,8 +7,8 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
-import com.websitebeaver.documentscanner.R
-import com.websitebeaver.documentscanner.extensions.drawCheck
+import com.goapptiv.goapptiv_document_scanner.R
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.drawCheck
 
 /**
  * This class creates a circular done button by modifying an image button. The user presses

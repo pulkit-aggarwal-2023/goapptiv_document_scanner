@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner
+package com.goapptiv.goapptiv_document_scanner.scanner
 
 import android.app.Activity
 import android.content.Intent
@@ -8,21 +8,22 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.websitebeaver.documentscanner.constants.DefaultSetting
-import com.websitebeaver.documentscanner.constants.DocumentScannerExtra
-import com.websitebeaver.documentscanner.constants.ImageProvider
-import com.websitebeaver.documentscanner.extensions.move
-import com.websitebeaver.documentscanner.extensions.onClick
-import com.websitebeaver.documentscanner.extensions.saveToFile
-import com.websitebeaver.documentscanner.extensions.screenHeight
-import com.websitebeaver.documentscanner.extensions.screenWidth
-import com.websitebeaver.documentscanner.models.Document
-import com.websitebeaver.documentscanner.models.Quad
-import com.websitebeaver.documentscanner.ui.ImageCropView
-import com.websitebeaver.documentscanner.utils.CameraUtil
-import com.websitebeaver.documentscanner.utils.FileUtil
-import com.websitebeaver.documentscanner.utils.GalleryUtil
-import com.websitebeaver.documentscanner.utils.ImageUtil
+import com.goapptiv.goapptiv_document_scanner.R
+import com.goapptiv.goapptiv_document_scanner.scanner.constants.DefaultSetting
+import com.goapptiv.goapptiv_document_scanner.scanner.constants.DocumentScannerExtra
+import com.goapptiv.goapptiv_document_scanner.scanner.constants.ImageProvider
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.move
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.onClick
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.saveToFile
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.screenHeight
+import com.goapptiv.goapptiv_document_scanner.scanner.extensions.screenWidth
+import com.goapptiv.goapptiv_document_scanner.scanner.models.Document
+import com.goapptiv.goapptiv_document_scanner.scanner.models.Quad
+import com.goapptiv.goapptiv_document_scanner.scanner.ui.ImageCropView
+import com.goapptiv.goapptiv_document_scanner.scanner.utils.CameraUtil
+import com.goapptiv.goapptiv_document_scanner.scanner.utils.FileUtil
+import com.goapptiv.goapptiv_document_scanner.scanner.utils.GalleryUtil
+import com.goapptiv.goapptiv_document_scanner.scanner.utils.ImageUtil
 import java.io.File
 import org.opencv.core.Point
 

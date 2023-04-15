@@ -1,4 +1,4 @@
-package com.websitebeaver.documentscanner.utils
+package com.goapptiv.goapptiv_document_scanner.scanner.utils
 
 import android.os.Environment
 import androidx.activity.ComponentActivity
