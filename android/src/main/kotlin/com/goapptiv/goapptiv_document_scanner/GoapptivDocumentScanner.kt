@@ -39,14 +39,18 @@ class GoapptivDocumentScanner : FlutterPlugin, MethodChannel.MethodCallHandler, 
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-        if (call.method == "getPicture") {
-            this.pendingResult = result
-            startScan()
-        }else if(call.method == "getPictureFromGallery"){
-            this.pendingResult = result;
-            startScanFromGallery()
-        } else {
-            result.notImplemented()
+        when (call.method) {
+            "getPicture" -> {
+                this.pendingResult = result
+                startScan(ImageProvider.CAMERA)
+            }
+            "getPictureFromGallery" -> {
+                this.pendingResult = result;
+                startScan(ImageProvider.GALLERY)
+            }
+            else -> {
+                result.notImplemented()
+            }
         }
     }
 
@@ -114,7 +118,7 @@ class GoapptivDocumentScanner : FlutterPlugin, MethodChannel.MethodCallHandler, 
     /**
      * create intent to launch document scanner and set custom options
      */
-    private fun createDocumentScanIntent(): Intent {
+    private fun createDocumentScanIntent(imageProvider: String): Intent {
         val documentScanIntent = Intent(activity, DocumentScannerActivity::class.java)
         documentScanIntent.putExtra(
             DocumentScannerExtra.EXTRA_LET_USER_ADJUST_CROP,
@@ -124,22 +128,7 @@ class GoapptivDocumentScanner : FlutterPlugin, MethodChannel.MethodCallHandler, 
             DocumentScannerExtra.EXTRA_MAX_NUM_DOCUMENTS,
             1
         )
-        documentScanIntent.putExtra(DocumentScannerExtra.EXTRA_IMAGE_PROVIDER,ImageProvider.CAMERA)
-
-        return documentScanIntent
-    }
-
-    private fun createDocumentScanIntentFromGallery(): Intent {
-        val documentScanIntent = Intent(activity, DocumentScannerActivity::class.java)
-        documentScanIntent.putExtra(
-            DocumentScannerExtra.EXTRA_LET_USER_ADJUST_CROP,
-            true
-        )
-        documentScanIntent.putExtra(
-            DocumentScannerExtra.EXTRA_MAX_NUM_DOCUMENTS,
-            1
-        )
-        documentScanIntent.putExtra(DocumentScannerExtra.EXTRA_IMAGE_PROVIDER,ImageProvider.GALLERY)
+        documentScanIntent.putExtra(DocumentScannerExtra.EXTRA_IMAGE_PROVIDER,imageProvider)
 
         return documentScanIntent
     }
@@ -148,21 +137,8 @@ class GoapptivDocumentScanner : FlutterPlugin, MethodChannel.MethodCallHandler, 
     /**
      * add document scanner result handler and launch the document scanner
      */
-    private fun startScan() {
-        val intent = createDocumentScanIntent()
-        try {
-            ActivityCompat.startActivityForResult(
-                this.activity,
-                intent,
-                START_DOCUMENT_ACTIVITY,
-                null
-            )
-        } catch (e: ActivityNotFoundException) {
-            pendingResult?.error("ERROR", "FAILED TO START ACTIVITY", null)
-        }
-    }
-    private fun startScanFromGallery() {
-        val intent = createDocumentScanIntentFromGallery()
+    private fun startScan(imageProvider: String) {
+        val intent = createDocumentScanIntent(imageProvider)
         try {
             ActivityCompat.startActivityForResult(
                 this.activity,
