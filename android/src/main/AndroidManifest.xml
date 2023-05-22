@@ -15,14 +15,23 @@
             android:requestLegacyExternalStorage="true"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
+
             <activity
-                android:name=".scan.ScanActivity"
-                android:launchMode="singleTask"
-                android:screenOrientation="portrait" />
-            <activity
-                android:name=".crop.CropActivity"
-                android:launchMode="singleTask"
-                android:screenOrientation="portrait" />
+                android:name=".scanner.DocumentScannerActivity"
+                android:configChanges="orientation|screenSize"
+                android:screenOrientation="portrait"
+                android:theme="@style/Theme.FullScreen" />
+
+            <provider
+                android:name="com.goapptiv.goapptiv_document_scanner.scanner.DocumentScannerFileProvider"
+                android:authorities="${applicationId}.DocumentScannerFileProvider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+                <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
+            </provider>
         </application>
 
 </manifest>

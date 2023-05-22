@@ -1,76 +1,52 @@
 package com.goapptiv.goapptiv_document_scanner
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.os.Bundle
-import com.goapptiv.goapptiv_document_scanner.scan.ScanActivity
+import android.util.Log
+import androidx.core.app.ActivityCompat
+import com.goapptiv.goapptiv_document_scanner.scanner.DocumentScannerActivity
+import com.goapptiv.goapptiv_document_scanner.scanner.constants.DocumentScannerExtra
+import com.goapptiv.goapptiv_document_scanner.scanner.constants.ImageProvider
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry
+import java.util.logging.Logger
 
-class GoapptivDocumentScanner : FlutterPlugin, ActivityAware {
-    private var handler: EdgeDetectionHandler? = null
 
-    override fun onAttachedToEngine(binding: FlutterPluginBinding) {
-        handler = EdgeDetectionHandler()
-        val channel = MethodChannel(
-            binding.binaryMessenger, "goapptiv_document_scanner"
-        )
-        channel.setMethodCallHandler(handler)
+/** GoapptivDocumentScanner */
+class GoapptivDocumentScanner : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware {
+    private var delegate: PluginRegistry.ActivityResultListener? = null
+    private var binding: ActivityPluginBinding? = null
+    private var pendingResult: Result? = null
+    private lateinit var activity: Activity
+    private val START_DOCUMENT_ACTIVITY: Int = 0x362738
+
+    /// The MethodChannel that will the communication between Flutter and native Android
+    ///
+    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
+    /// when the Flutter Engine is detached from the Activity
+    private lateinit var channel: MethodChannel
+
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "goapptiv_document_scanner")
+        channel.setMethodCallHandler(this)
     }
 
-    override fun onDetachedFromEngine(binding: FlutterPluginBinding) {}
-
-    override fun onAttachedToActivity(activityPluginBinding: ActivityPluginBinding) {
-        handler?.setActivityPluginBinding(activityPluginBinding)
-    }
-
-    override fun onDetachedFromActivityForConfigChanges() {}
-    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
-    override fun onDetachedFromActivity() {}
-}
-
-class EdgeDetectionHandler : MethodCallHandler, PluginRegistry.ActivityResultListener {
-    private var activityPluginBinding: ActivityPluginBinding? = null
-    private var result: MethodChannel.Result? = null
-    private var methodCall: MethodCall? = null
-
-    companion object {
-        public const val INITIAL_BUNDLE = "initial_bundle"
-        public const val FROM_GALLERY = "from_gallery"
-        public const val SAVE_TO = "save_to"
-        public const val CAN_USE_GALLERY = "can_use_gallery"
-        public const val SCAN_TITLE = "scan_title"
-        public const val CROP_TITLE = "crop_title"
-        public const val CROP_BLACK_WHITE_TITLE = "crop_black_white_title"
-        public const val CROP_RESET_TITLE = "crop_reset_title"
-    }
-
-    fun setActivityPluginBinding(activityPluginBinding: ActivityPluginBinding) {
-        activityPluginBinding.addActivityResultListener(this)
-        this.activityPluginBinding = activityPluginBinding
-    }
-
-    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        when {
-            getActivity() == null -> {
-                result.error(
-                    "no_activity",
-                    "goapptiv_document_scanner plugin requires a foreground activity.",
-                    null
-                )
-                return
+    override fun onMethodCall(call: MethodCall, result: Result) {
+        when (call.method) {
+            "getPicture" -> {
+                this.pendingResult = result
+                startScan(ImageProvider.CAMERA)
             }
-            call.method.equals("getPicture") -> {
-                openCameraActivity(call, result)
-            }
-            call.method.equals("getPictureFromGallery") -> {
-                openGalleryActivity(call, result)
+            "getPictureFromGallery" -> {
+                this.pendingResult = result;
+                startScan(ImageProvider.GALLERY)
             }
             else -> {
                 result.notImplemented()
@@ -78,95 +54,116 @@ class EdgeDetectionHandler : MethodCallHandler, PluginRegistry.ActivityResultLis
         }
     }
 
-    private fun getActivity(): Activity? {
-        return activityPluginBinding?.activity
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        channel.setMethodCallHandler(null)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                finishWithSuccess(true)
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                finishWithSuccess(false)
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        this.activity = binding.activity
+
+        addActivityResultListener(binding)
+    }
+
+    private fun addActivityResultListener(binding: ActivityPluginBinding) {
+        this.binding = binding
+        if (this.delegate == null) {
+            this.delegate = PluginRegistry.ActivityResultListener { requestCode, resultCode, data ->
+                if (requestCode != START_DOCUMENT_ACTIVITY) {
+                    return@ActivityResultListener false
+                }
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        // check for errors
+                        val error = data?.extras?.getString("error")
+                        if (error != null) {
+                            throw Exception("error - $error")
+                        }
+
+                        // get an array with scanned document file paths
+
+                        val croppedImageResults =
+                            data?.getStringArrayListExtra("croppedImageResults")?.toList()
+                                ?: throw Exception("No cropped images returned")
+
+                        Log.d("GoapptivDocumentScanner", croppedImageResults[0])
+
+                        // return a list of file paths
+                        // removing file uri prefix as Flutter file will have problems with it
+                        val successResponse = croppedImageResults.map {
+                            it.removePrefix("file://")
+                        }.toList()
+
+                        // trigger the success event handler with an array of cropped images
+                        this.pendingResult?.success(successResponse)
+                        return@ActivityResultListener true
+                    }
+                    Activity.RESULT_CANCELED -> {
+                        // user closed camera
+                        this.pendingResult?.success(emptyList<String>())
+                        return@ActivityResultListener true
+                    }
+                    else -> {
+                        return@ActivityResultListener false
+                    }
+                }
             }
-            return true
+        } else {
+            binding.removeActivityResultListener(this.delegate!!)
         }
-        return false
+
+        binding.addActivityResultListener(delegate!!)
     }
 
-    private fun openCameraActivity(call: MethodCall, result: MethodChannel.Result) {
-        if (!setPendingMethodCallAndResult(call, result)) {
-            finishWithAlreadyActiveError()
-            return
-        }
 
-        val initialIntent =
-            Intent(Intent(getActivity()?.applicationContext, ScanActivity::class.java))
-        val bundle = Bundle();
-        bundle.putString(SAVE_TO, call.argument<String>(SAVE_TO) as String)
-        bundle.putString(SCAN_TITLE, call.argument<String>(SCAN_TITLE) as String)
-        bundle.putString(CROP_TITLE, call.argument<String>(CROP_TITLE) as String)
-        bundle.putString(
-            CROP_BLACK_WHITE_TITLE,
-            call.argument<String>(CROP_BLACK_WHITE_TITLE) as String
+    /**
+     * create intent to launch document scanner and set custom options
+     */
+    private fun createDocumentScanIntent(imageProvider: String): Intent {
+        val documentScanIntent = Intent(activity, DocumentScannerActivity::class.java)
+        documentScanIntent.putExtra(
+            DocumentScannerExtra.EXTRA_LET_USER_ADJUST_CROP,
+            true
         )
-        bundle.putString(CROP_RESET_TITLE, call.argument<String>(CROP_RESET_TITLE) as String)
-        bundle.putBoolean(CAN_USE_GALLERY, false)
-        initialIntent.putExtra(INITIAL_BUNDLE, bundle)
-        getActivity()?.startActivityForResult(initialIntent, REQUEST_CODE)
-    }
-
-    private fun openGalleryActivity(call: MethodCall, result: MethodChannel.Result) {
-        if (!setPendingMethodCallAndResult(call, result)) {
-            finishWithAlreadyActiveError()
-            return
-        }
-        val initialIntent =
-            Intent(Intent(getActivity()?.applicationContext, ScanActivity::class.java))
-        val bundle = Bundle();
-        bundle.putString(SCAN_TITLE,call.argument<String>(SCAN_TITLE) as String)
-        bundle.putString(SAVE_TO, call.argument<String>(SAVE_TO) as String)
-        bundle.putString(CROP_TITLE, call.argument<String>(CROP_TITLE) as String)
-        bundle.putString(
-            CROP_BLACK_WHITE_TITLE,
-            call.argument<String>(CROP_BLACK_WHITE_TITLE) as String
+        documentScanIntent.putExtra(
+            DocumentScannerExtra.EXTRA_MAX_NUM_DOCUMENTS,
+            1
         )
-        bundle.putString(CROP_RESET_TITLE, call.argument<String>(CROP_RESET_TITLE) as String)
-        bundle.putBoolean(FROM_GALLERY, call.argument<Boolean>(FROM_GALLERY) as Boolean)
-        initialIntent.putExtra(INITIAL_BUNDLE, bundle)
-        getActivity()?.startActivityForResult(initialIntent, REQUEST_CODE)
+        documentScanIntent.putExtra(DocumentScannerExtra.EXTRA_IMAGE_PROVIDER,imageProvider)
+
+        return documentScanIntent
     }
 
-    private fun setPendingMethodCallAndResult(
-        methodCall: MethodCall,
-        result: MethodChannel.Result
-    ): Boolean {
-        if (this.result != null) {
-            return false
+
+    /**
+     * add document scanner result handler and launch the document scanner
+     */
+    private fun startScan(imageProvider: String) {
+        val intent = createDocumentScanIntent(imageProvider)
+        try {
+            ActivityCompat.startActivityForResult(
+                this.activity,
+                intent,
+                START_DOCUMENT_ACTIVITY,
+                null
+            )
+        } catch (e: ActivityNotFoundException) {
+            pendingResult?.error("ERROR", "FAILED TO START ACTIVITY", null)
         }
-        this.methodCall = methodCall
-        this.result = result
-        return true
     }
 
-    private fun finishWithAlreadyActiveError() {
-        finishWithError("already_active", "Goapptiv Scanner is already active")
+    override fun onDetachedFromActivityForConfigChanges() {
+
     }
 
-    private fun finishWithError(errorCode: String, errorMessage: String) {
-        result?.error(errorCode, errorMessage, null)
-        clearMethodCallAndResult()
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+        addActivityResultListener(binding)
     }
 
-    private fun finishWithSuccess(res: Boolean) {
-        result?.success(res)
-        clearMethodCallAndResult()
+    override fun onDetachedFromActivity() {
+        removeActivityResultListener()
     }
 
-    private fun clearMethodCallAndResult() {
-        methodCall = null
-        result = null
+    private fun removeActivityResultListener() {
+        this.delegate?.let { this.binding?.removeActivityResultListener(it) }
     }
-
-
 }

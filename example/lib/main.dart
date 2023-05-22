@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
                       setState(() {});
                     }
                   },
-                  child: const Text('Take Pic'),
+                  child: const Text('Camera'),
                 ),
               ),
             ),
@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
                       setState(() {});
                     }
                   },
-                  child: const Text('Take Pic'),
+                  child: const Text('Gallery'),
                 ),
               ),
             ),
