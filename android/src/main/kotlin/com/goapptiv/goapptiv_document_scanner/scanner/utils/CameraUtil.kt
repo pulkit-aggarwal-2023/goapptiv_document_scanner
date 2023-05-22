@@ -70,6 +70,10 @@ class CameraUtil(
             "${activity.packageName}.DocumentScannerFileProvider",
             photoFile
         )
+
+
+
+
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
 
         // open camera
