@@ -104,6 +104,7 @@ class ImageCropView(context: Context, attrs: AttributeSet) : AppCompatImageView(
                 } else {
                     // if user takes the photo in landscape
                     (screenWidth.toFloat() * imageRatio).toInt()
+
                 }
 
         // set a cap on imagePreviewHeight, so that the bottom buttons container isn't hidden
