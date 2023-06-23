@@ -24,11 +24,11 @@ abstract class GoapptivDocumentScannerPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPicture() {
+  Future<String?> getPicture({bool letUserCropImage = true}) {
     throw UnimplementedError('getPicture() has not been implemented.');
   }
 
-  Future<String?> getPictureFromGallery() {
+  Future<String?> getPictureFromGallery({bool letUserCropImage = true}) {
     throw UnimplementedError(
         'getPictureFromGallery() has not been implemented.');
   }

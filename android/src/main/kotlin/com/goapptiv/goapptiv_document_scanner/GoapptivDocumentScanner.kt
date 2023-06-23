@@ -42,11 +42,11 @@ class GoapptivDocumentScanner : FlutterPlugin, MethodChannel.MethodCallHandler, 
         when (call.method) {
             "getPicture" -> {
                 this.pendingResult = result
-                startScan(ImageProvider.CAMERA)
+                startScan(ImageProvider.CAMERA,call.argument<Boolean>(DocumentScannerExtra.EXTRA_LET_USER_ADJUST_CROP) as Boolean)
             }
             "getPictureFromGallery" -> {
                 this.pendingResult = result;
-                startScan(ImageProvider.GALLERY)
+                startScan(ImageProvider.GALLERY,call.argument<Boolean>(DocumentScannerExtra.EXTRA_LET_USER_ADJUST_CROP) as Boolean)
             }
             else -> {
                 result.notImplemented()
@@ -118,11 +118,11 @@ class GoapptivDocumentScanner : FlutterPlugin, MethodChannel.MethodCallHandler, 
     /**
      * create intent to launch document scanner and set custom options
      */
-    private fun createDocumentScanIntent(imageProvider: String): Intent {
+    private fun createDocumentScanIntent(imageProvider: String,letUserCropImage: Boolean): Intent {
         val documentScanIntent = Intent(activity, DocumentScannerActivity::class.java)
         documentScanIntent.putExtra(
             DocumentScannerExtra.EXTRA_LET_USER_ADJUST_CROP,
-            true
+            letUserCropImage
         )
         documentScanIntent.putExtra(
             DocumentScannerExtra.EXTRA_MAX_NUM_DOCUMENTS,
@@ -137,8 +137,8 @@ class GoapptivDocumentScanner : FlutterPlugin, MethodChannel.MethodCallHandler, 
     /**
      * add document scanner result handler and launch the document scanner
      */
-    private fun startScan(imageProvider: String) {
-        val intent = createDocumentScanIntent(imageProvider)
+    private fun startScan(imageProvider: String,letUserCropImage: Boolean) {
+        val intent = createDocumentScanIntent(imageProvider,letUserCropImage)
         try {
             ActivityCompat.startActivityForResult(
                 this.activity,

@@ -41,8 +41,9 @@ class _MyAppState extends State<MyApp> {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () async {
-                    final imagePath =
-                        await GoapptivDocumentScanner.getPicture();
+                    final imagePath = await GoapptivDocumentScanner.getPicture(
+                      letUserCropImage: true,
+                    );
                     if (imagePath != null) {
                       log(imagePath);
                       imageFile = File(imagePath);
@@ -58,7 +59,9 @@ class _MyAppState extends State<MyApp> {
                 child: ElevatedButton(
                   onPressed: () async {
                     final imagePath =
-                        await GoapptivDocumentScanner.getPictureFromGallery();
+                        await GoapptivDocumentScanner.getPictureFromGallery(
+                      letUserCropImage: false,
+                    );
                     if (imagePath != null) {
                       log(imagePath);
                       imageFile = File(imagePath);
