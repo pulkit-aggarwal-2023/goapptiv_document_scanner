@@ -14,7 +14,7 @@ class MethodChannelGoapptivDocumentScanner
   final methodChannel = const MethodChannel('goapptiv_document_scanner');
 
   @override
-  Future<String?> getPicture() async {
+  Future<String?> getPicture({bool letUserCropImage = true}) async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
       Permission.storage,
@@ -23,9 +23,12 @@ class MethodChannelGoapptivDocumentScanner
       throw Exception("Permission not granted");
     }
     if (Platform.isAndroid) {
-      final List<dynamic> pictures =
-          await methodChannel.invokeMethod('getPicture');
-
+      final List<dynamic> pictures = await methodChannel.invokeMethod(
+        'getPicture',
+        {
+          'letUserAdjustCrop': letUserCropImage,
+        },
+      );
       return pictures.isEmpty ? null : pictures.first;
     } else {
       final String? filePath = await methodChannel.invokeMethod("getPicture");
@@ -34,7 +37,7 @@ class MethodChannelGoapptivDocumentScanner
   }
 
   @override
-  Future<String?> getPictureFromGallery() async {
+  Future<String?> getPictureFromGallery({bool letUserCropImage = true}) async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
       Permission.storage,
@@ -43,8 +46,12 @@ class MethodChannelGoapptivDocumentScanner
       throw Exception("Permission not granted");
     }
     if (Platform.isAndroid) {
-      final List<dynamic> pictures =
-          await methodChannel.invokeMethod('getPictureFromGallery');
+      final List<dynamic> pictures = await methodChannel.invokeMethod(
+        'getPictureFromGallery',
+        {
+          'letUserAdjustCrop': letUserCropImage,
+        },
+      );
 
       return pictures.isEmpty ? null : pictures.first;
     } else {

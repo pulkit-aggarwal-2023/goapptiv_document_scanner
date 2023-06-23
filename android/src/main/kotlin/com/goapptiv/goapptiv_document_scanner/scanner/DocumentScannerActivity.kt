@@ -107,16 +107,14 @@ class DocumentScannerActivity : AppCompatActivity() {
             // get document corners by detecting them, or falling back to photo corners with
             // slight margin if we can't find the corners
             val corners = try {
-                val (topLeft, topRight, bottomLeft, bottomRight) = getDocumentCorners(photo)
+                val (topLeft, topRight, bottomLeft, bottomRight) =  if(letUserAdjustCrop) getDocumentCorners(photo) else getWholeDocumentCorners(photo)
                 Quad(topLeft, topRight, bottomRight, bottomLeft)
             } catch (exception: Exception) {
-                finishIntentWithError(
-                    "unable to get document corners: ${exception.message}"
-                )
-                return@CameraUtil
+                val (topLeft, topRight, bottomLeft, bottomRight) =  getDefaultDocumentCorners(photo)
+                Quad(topLeft, topRight, bottomRight, bottomLeft)
             }
 
-            document = Document(originalPhotoPath, photo.width, photo.height, corners)
+            document = Document(originalPhotoPath, photo.width, photo.height,corners)
 
             if (letUserAdjustCrop) {
                 // user is allowed to move corners to make corrections
@@ -190,13 +188,11 @@ class DocumentScannerActivity : AppCompatActivity() {
             // get document corners by detecting them, or falling back to photo corners with
             // slight margin if we can't find the corners
             val corners = try {
-                val (topLeft, topRight, bottomLeft, bottomRight) = getDocumentCorners(photo)
+                val (topLeft, topRight, bottomLeft, bottomRight) = if(letUserAdjustCrop) getDocumentCorners(photo) else getWholeDocumentCorners(photo)
                 Quad(topLeft, topRight, bottomRight, bottomLeft)
             } catch (exception: Exception) {
-                finishIntentWithError(
-                    "unable to get document corners: ${exception.message}"
-                )
-                return@GalleryUtil
+                val (topLeft, topRight, bottomLeft, bottomRight) = getDefaultDocumentCorners(photo)
+                Quad(topLeft, topRight, bottomRight, bottomLeft)
             }
 
             document = Document(originalPhotoPath, photo.width, photo.height, corners)
@@ -222,10 +218,8 @@ class DocumentScannerActivity : AppCompatActivity() {
                     // display cropper, and allow user to move corners
                     imageView.setCropper(cornersInImagePreviewCoordinates)
                 } catch (exception: Exception) {
-                    finishIntentWithError(
-                        "unable get image preview ready: ${exception.message}"
-                    )
-                    return@GalleryUtil
+                    val (topLeft, topRight, bottomLeft, bottomRight) = getDefaultDocumentCorners(photo)
+                    Quad(topLeft, topRight, bottomRight, bottomLeft)
                 }
             } else {
                 // user isn't allowed to move corners, so accept automatically detected corners
@@ -399,6 +393,38 @@ class DocumentScannerActivity : AppCompatActivity() {
         )
     }
 
+    private fun getDefaultDocumentCorners(photo: Bitmap): List<Point> {
+        return listOf(
+            Point(0.0, 0.0).move(
+                cropperOffsetWhenCornersNotFound,
+                cropperOffsetWhenCornersNotFound
+            ),
+            Point( photo.width.toDouble(), 0.0).move(
+                -cropperOffsetWhenCornersNotFound,
+                cropperOffsetWhenCornersNotFound
+            ),
+            Point(0.0, photo.height.toDouble()).move(
+                cropperOffsetWhenCornersNotFound,
+                -cropperOffsetWhenCornersNotFound
+            ),
+            Point(photo.width.toDouble(), photo.height.toDouble()).move(
+                -cropperOffsetWhenCornersNotFound,
+                -cropperOffsetWhenCornersNotFound
+            )
+        )
+    }
+
+    private fun getWholeDocumentCorners(photo: Bitmap): List<Point> {
+
+        // if cornerPoints is null then default the corners to the photo bounds with a margin
+        return  listOf(
+            Point(0.0, 0.0),
+            Point( photo.width.toDouble(), 0.0),
+            Point(0.0, photo.height.toDouble()),
+            Point(photo.width.toDouble(), photo.height.toDouble())
+        )
+    }
+
     /**
      * Set document to null since we're capturing a new document, and open the camera. If the
      * user captures a photo successfully document gets updated.
@@ -472,10 +498,8 @@ class DocumentScannerActivity : AppCompatActivity() {
             val (topLeft, topRight, bottomLeft, bottomRight) = getDocumentCorners(rotatedBitmap)
             Quad(topLeft, topRight, bottomRight, bottomLeft)
         } catch (exception: Exception) {
-            finishIntentWithError(
-                "unable to get document corners: ${exception.message}"
-            )
-            return
+            val (topLeft, topRight, bottomLeft, bottomRight) = getDefaultDocumentCorners(photo)
+            Quad(topLeft, topRight, bottomRight, bottomLeft)
         }
         document = Document(filePath, rotatedBitmap.width, rotatedBitmap.height, corners)
         imageView.setImagePreviewBounds(rotatedBitmap, screenWidth, screenHeight)

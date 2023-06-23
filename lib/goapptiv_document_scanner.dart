@@ -8,11 +8,13 @@
 import 'goapptiv_document_scanner_platform_interface.dart';
 
 class GoapptivDocumentScanner {
-  static Future<String?> getPicture() {
-    return GoapptivDocumentScannerPlatform.instance.getPicture();
+  static Future<String?> getPicture({bool letUserCropImage = true}) {
+    return GoapptivDocumentScannerPlatform.instance
+        .getPicture(letUserCropImage: letUserCropImage);
   }
 
-  static Future<String?> getPictureFromGallery() {
-    return GoapptivDocumentScannerPlatform.instance.getPictureFromGallery();
+  static Future<String?> getPictureFromGallery({bool letUserCropImage = true}) {
+    return GoapptivDocumentScannerPlatform.instance
+        .getPictureFromGallery(letUserCropImage: letUserCropImage);
   }
 }
