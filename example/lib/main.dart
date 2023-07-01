@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () async {
                     final imagePath =
                         await GoapptivDocumentScanner.getPictureFromGallery(
-                      letUserCropImage: false,
+                      letUserCropImage: true,
                     );
                     if (imagePath != null) {
                       log(imagePath);

@@ -107,7 +107,7 @@ class DocumentScannerActivity : AppCompatActivity() {
             // get document corners by detecting them, or falling back to photo corners with
             // slight margin if we can't find the corners
             val corners = try {
-                val (topLeft, topRight, bottomLeft, bottomRight) =  if(letUserAdjustCrop) getDocumentCorners(photo) else getWholeDocumentCorners(photo)
+                val (topLeft, topRight, bottomLeft, bottomRight) =  if(letUserAdjustCrop) getDefaultDocumentCorners(photo) else getWholeDocumentCorners(photo)
                 Quad(topLeft, topRight, bottomRight, bottomLeft)
             } catch (exception: Exception) {
                 val (topLeft, topRight, bottomLeft, bottomRight) =  getDefaultDocumentCorners(photo)
@@ -135,7 +135,7 @@ class DocumentScannerActivity : AppCompatActivity() {
                         )
 
                     // display cropper, and allow user to move corners
-                    imageView.setCropper(corners)
+                    imageView.setCropper(cornersInImagePreviewCoordinates)
                 } catch (exception: Exception) {
                     finishIntentWithError(
                         "unable get image preview ready: ${exception.message}"
@@ -188,7 +188,7 @@ class DocumentScannerActivity : AppCompatActivity() {
             // get document corners by detecting them, or falling back to photo corners with
             // slight margin if we can't find the corners
             val corners = try {
-                val (topLeft, topRight, bottomLeft, bottomRight) = if(letUserAdjustCrop) getDocumentCorners(photo) else getWholeDocumentCorners(photo)
+                val (topLeft, topRight, bottomLeft, bottomRight) = if(letUserAdjustCrop) getDefaultDocumentCorners(photo) else getWholeDocumentCorners(photo)
                 Quad(topLeft, topRight, bottomRight, bottomLeft)
             } catch (exception: Exception) {
                 val (topLeft, topRight, bottomLeft, bottomRight) = getDefaultDocumentCorners(photo)
@@ -495,7 +495,7 @@ class DocumentScannerActivity : AppCompatActivity() {
         photo=rotatedBitmap
         imageView.setImage(photo)
         val corners = try {
-            val (topLeft, topRight, bottomLeft, bottomRight) = getDocumentCorners(rotatedBitmap)
+            val (topLeft, topRight, bottomLeft, bottomRight) = getDefaultDocumentCorners(rotatedBitmap)
             Quad(topLeft, topRight, bottomRight, bottomLeft)
         } catch (exception: Exception) {
             val (topLeft, topRight, bottomLeft, bottomRight) = getDefaultDocumentCorners(photo)
