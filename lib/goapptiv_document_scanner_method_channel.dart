@@ -20,7 +20,7 @@ class MethodChannelGoapptivDocumentScanner
       Permission.storage,
     ].request();
     if (statuses.containsValue(PermissionStatus.denied)) {
-      throw Exception("Permission not granted");
+      throw Exception("PERMISSION_NOT_AVAILABLE");
     }
     if (Platform.isAndroid) {
       final List<dynamic> pictures = await methodChannel.invokeMethod(
@@ -43,7 +43,7 @@ class MethodChannelGoapptivDocumentScanner
       Permission.storage,
     ].request();
     if (statuses.containsValue(PermissionStatus.denied)) {
-      throw Exception("Permission not granted");
+      throw Exception("PERMISSION_NOT_AVAILABLE");
     }
     if (Platform.isAndroid) {
       final List<dynamic> pictures = await methodChannel.invokeMethod(
