@@ -20,7 +20,7 @@ class MethodChannelGoapptivDocumentScanner
       Permission.camera,
       Permission.storage,
     ].request();
-    if (statuses.containsValue(PermissionStatus.denied)) {
+    if (statuses.containsValue(PermissionStatus.denied) || statuses.containsValue(PermissionStatus.permanentlyDenied) || statuses.containsValue(PermissionStatus.restricted))  {
       throw Exception(Constants.permissionDenied);
     }
     if (Platform.isAndroid) {
@@ -43,7 +43,7 @@ class MethodChannelGoapptivDocumentScanner
       Permission.camera,
       Permission.storage,
     ].request();
-    if (statuses.containsValue(PermissionStatus.denied)) {
+    if (statuses.containsValue(PermissionStatus.denied) || statuses.containsValue(PermissionStatus.permanentlyDenied) || statuses.containsValue(PermissionStatus.restricted))  {
       throw Exception(Constants.permissionDenied);
     }
     if (Platform.isAndroid) {
