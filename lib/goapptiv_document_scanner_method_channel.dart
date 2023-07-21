@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:goapptiv_document_scanner/constants.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'goapptiv_document_scanner_platform_interface.dart';
@@ -20,7 +21,7 @@ class MethodChannelGoapptivDocumentScanner
       Permission.storage,
     ].request();
     if (statuses.containsValue(PermissionStatus.denied)) {
-      throw Exception("Permission not granted");
+      throw Exception(Constants.permissionDenied);
     }
     if (Platform.isAndroid) {
       final List<dynamic> pictures = await methodChannel.invokeMethod(
@@ -43,7 +44,7 @@ class MethodChannelGoapptivDocumentScanner
       Permission.storage,
     ].request();
     if (statuses.containsValue(PermissionStatus.denied)) {
-      throw Exception("Permission not granted");
+      throw Exception(Constants.permissionDenied);
     }
     if (Platform.isAndroid) {
       final List<dynamic> pictures = await methodChannel.invokeMethod(
