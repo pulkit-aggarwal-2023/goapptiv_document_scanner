@@ -13,7 +13,7 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - goapptiv_document_scanner (from `.symlinks/plugins/goapptiv_document_scanner/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
 
 SPEC REPOS:
@@ -26,17 +26,17 @@ EXTERNAL SOURCES:
   goapptiv_document_scanner:
     :path: ".symlinks/plugins/goapptiv_document_scanner/ios"
   path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/ios"
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  goapptiv_document_scanner: 5ef80faed249181771bec8824c127327b9f08ee9
+  goapptiv_document_scanner: 42266400caf033e1da3013777f7e3ca07d0222db
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
