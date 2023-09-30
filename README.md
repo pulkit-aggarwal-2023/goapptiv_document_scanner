@@ -47,7 +47,7 @@ end
 Add this line to your Podfile in your project:
 
 ```
-pod 'WeScan', :path => '.symlinks/plugins/edge_detection/ios/WeScan-3.0.0'
+pod 'WeScan', :path => '.symlinks/plugins/goapptiv_document_scanner/ios/WeScan-3.0.0'
 ```
 
 => like this below:
