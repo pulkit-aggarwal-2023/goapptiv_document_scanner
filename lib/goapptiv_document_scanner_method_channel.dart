@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:goapptiv_document_scanner/constants.dart';
@@ -16,9 +17,11 @@ class MethodChannelGoapptivDocumentScanner
 
   @override
   Future<String?> getPicture({bool letUserCropImage = true}) async {
+    DeviceInfoPlugin plugin = DeviceInfoPlugin();
+    AndroidDeviceInfo android = await plugin.androidInfo;
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
-      Permission.storage,
+      if (android.version.sdkInt < 33) Permission.storage,
     ].request();
     if (statuses.containsValue(PermissionStatus.denied)) {
       throw Exception(Constants.permissionDenied);
@@ -39,9 +42,12 @@ class MethodChannelGoapptivDocumentScanner
 
   @override
   Future<String?> getPictureFromGallery({bool letUserCropImage = true}) async {
+    DeviceInfoPlugin plugin = DeviceInfoPlugin();
+    AndroidDeviceInfo android = await plugin.androidInfo;
     Map<Permission, PermissionStatus> statuses = await [
-      Permission.camera,
-      Permission.storage,
+      if (android.version.sdkInt < 33)
+        Permission.storage
+      else ...[Permission.photos, Permission.videos]
     ].request();
     if (statuses.containsValue(PermissionStatus.denied)) {
       throw Exception(Constants.permissionDenied);
