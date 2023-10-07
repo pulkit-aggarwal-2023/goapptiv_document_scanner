@@ -17,12 +17,13 @@ class MethodChannelGoapptivDocumentScanner
 
   @override
   Future<String?> getPicture({bool letUserCropImage = true}) async {
-    DeviceInfoPlugin plugin = DeviceInfoPlugin();
-    AndroidDeviceInfo android = await plugin.androidInfo;
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.camera,
-      if (android.version.sdkInt < 33) Permission.storage,
-    ].request();
+    List<Permission> permissions = [Permission.camera];
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin plugin = DeviceInfoPlugin();
+      AndroidDeviceInfo android = await plugin.androidInfo;
+      if (android.version.sdkInt < 33) permissions.add(Permission.storage);
+    }
+    Map<Permission, PermissionStatus> statuses = await permissions.request();
     if (statuses.containsValue(PermissionStatus.denied)) {
       throw Exception(Constants.permissionDenied);
     }
@@ -42,13 +43,19 @@ class MethodChannelGoapptivDocumentScanner
 
   @override
   Future<String?> getPictureFromGallery({bool letUserCropImage = true}) async {
-    DeviceInfoPlugin plugin = DeviceInfoPlugin();
-    AndroidDeviceInfo android = await plugin.androidInfo;
-    Map<Permission, PermissionStatus> statuses = await [
-      if (android.version.sdkInt < 33)
-        Permission.storage
-      else ...[Permission.photos, Permission.videos]
-    ].request();
+    List<Permission> permissions = [Permission.camera];
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin plugin = DeviceInfoPlugin();
+      AndroidDeviceInfo android = await plugin.androidInfo;
+      if (android.version.sdkInt < 33) {
+        permissions.add(Permission.storage);
+      } else {
+        permissions.addAll([Permission.photos, Permission.videos]);
+      }
+    } else if (Platform.isIOS) {
+      permissions.add(Permission.mediaLibrary);
+    }
+    Map<Permission, PermissionStatus> statuses = await permissions.request();
     if (statuses.containsValue(PermissionStatus.denied)) {
       throw Exception(Constants.permissionDenied);
     }
