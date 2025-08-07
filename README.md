@@ -17,7 +17,49 @@ goapptiv_document_scanner:
 
 ### iOS
 
-iOS 10.0 or higher is needed to use the plugin. Change the minimum platform version to 10 (or higher) in your `ios/Podfile` file.
+iOS 13.0 or higher is needed to use the plugin. Change the minimum platform version to 13 (or higher) in your `ios/Podfile` file.
+
+iOS 13.0 or higher is needed to use the plugin. If compiling for any version lower than 13.0 make sure to check the iOS version before using the plugin. Change the minimum platform version to 13 (or higher) in your `ios/Podfile` file, and inform/request access to the permissions acording with `permission_handler`
+
+```podspec
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+    target.build_configurations.each do |config|
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+
+        ## dart: PermissionGroup.camera
+         'PERMISSION_CAMERA=1',
+
+        ## dart: PermissionGroup.photos
+         'PERMISSION_PHOTOS=1',
+      ]
+
+    end
+    # End of the permission_handler configuration
+  end
+end
+```
+
+## Fix build on xCode 15
+
+Add this line to your Podfile in your project:
+
+```
+pod 'WeScan', :path => '.symlinks/plugins/goapptiv_document_scanner/ios/WeScan-3.0.0'
+```
+
+=> like this below:
+
+```podspec
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+  pod 'WeScan', :path => '.symlinks/plugins/edge_detection/ios/WeScan-3.0.0'
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+end
+```
 
 Add below permission to the `ios/Runner/Info.plist`:
 

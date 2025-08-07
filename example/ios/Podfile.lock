@@ -1,24 +1,21 @@
 PODS:
   - Flutter (1.0.0)
-  - goapptiv_document_scanner (1.0.0):
+  - goapptiv_document_scanner (2.0.0):
     - Flutter
-    - WeScan (>= 0.9)
+    - WeScan
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - permission_handler_apple (9.0.4):
+  - permission_handler_apple (9.1.1):
     - Flutter
-  - WeScan (1.7.0)
+  - WeScan (3.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - goapptiv_document_scanner (from `.symlinks/plugins/goapptiv_document_scanner/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
-
-SPEC REPOS:
-  trunk:
-    - WeScan
+  - WeScan (from `.symlinks/plugins/goapptiv_document_scanner/ios/WeScan-3.0.0`)
 
 EXTERNAL SOURCES:
   Flutter:
@@ -29,14 +26,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  WeScan:
+    :path: ".symlinks/plugins/goapptiv_document_scanner/ios/WeScan-3.0.0"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  goapptiv_document_scanner: 42266400caf033e1da3013777f7e3ca07d0222db
-  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
-  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
-  WeScan: fed582f6c38014d529afb5aa9ffd1bad38fc72b7
+  goapptiv_document_scanner: 915a65dbc2174d0cce2c0db5862ca2e89f57300b
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
+  WeScan: f50277f7304d146d9ebc4ebdc1b587df84dcdd8b
 
-PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+PODFILE CHECKSUM: c28c1599ecc35960bd8916144c917e1f946d763a
 
 COCOAPODS: 1.12.1

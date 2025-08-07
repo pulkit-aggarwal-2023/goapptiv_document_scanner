@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:goapptiv_document_scanner/constants.dart';
@@ -16,10 +17,15 @@ class MethodChannelGoapptivDocumentScanner
 
   @override
   Future<String?> getPicture({bool letUserCropImage = true}) async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.camera,
-      Permission.storage,
-    ].request();
+    List<Permission> permissions = [Permission.camera];
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin plugin = DeviceInfoPlugin();
+      AndroidDeviceInfo android = await plugin.androidInfo;
+      if ((android.version.sdkInt ?? 21) < 33) {
+        permissions.add(Permission.storage);
+      }
+    }
+    Map<Permission, PermissionStatus> statuses = await permissions.request();
     if (statuses.containsValue(PermissionStatus.denied)) {
       throw Exception(Constants.permissionDenied);
     }
@@ -39,10 +45,19 @@ class MethodChannelGoapptivDocumentScanner
 
   @override
   Future<String?> getPictureFromGallery({bool letUserCropImage = true}) async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.camera,
-      Permission.storage,
-    ].request();
+    List<Permission> permissions = [Permission.camera];
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin plugin = DeviceInfoPlugin();
+      AndroidDeviceInfo android = await plugin.androidInfo;
+      if ((android.version.sdkInt ?? 21) < 33) {
+        permissions.add(Permission.storage);
+      } else {
+        permissions.addAll([Permission.photos, Permission.videos]);
+      }
+    } else if (Platform.isIOS) {
+      permissions.add(Permission.mediaLibrary);
+    }
+    Map<Permission, PermissionStatus> statuses = await permissions.request();
     if (statuses.containsValue(PermissionStatus.denied)) {
       throw Exception(Constants.permissionDenied);
     }
