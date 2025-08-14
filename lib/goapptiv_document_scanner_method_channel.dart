@@ -45,14 +45,14 @@ class MethodChannelGoapptivDocumentScanner
 
   @override
   Future<String?> getPictureFromGallery({bool letUserCropImage = true}) async {
-    List<Permission> permissions = [Permission.camera];
+    List<Permission> permissions = [];
     if (Platform.isAndroid) {
       DeviceInfoPlugin plugin = DeviceInfoPlugin();
       AndroidDeviceInfo android = await plugin.androidInfo;
       if ((android.version.sdkInt ?? 21) < 33) {
         permissions.add(Permission.storage);
       } else {
-        permissions.addAll([Permission.photos, Permission.videos]);
+        permissions.addAll([Permission.photos]);
       }
     } else if (Platform.isIOS) {
       permissions.add(Permission.mediaLibrary);

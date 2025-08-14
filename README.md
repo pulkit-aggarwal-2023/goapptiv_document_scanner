@@ -78,13 +78,36 @@ The plugin code is written in kotlin 1.7.10 so the same has to be set to the and
 Change the kotlin_version to 1.7.10 in your `android/build.gradle` file.
 
 ```
-ext.kotlin_version = '1.7.10'
+ext.kotlin_version = '2.1.20'
 ```
 
 Change the minimum Android SDK version to 21 (or higher) in your `android/app/build.gradle` file.
 
 ```
-minSdkVersion 21
+minSdkVersion 24
+```
+### AndroidManifest permissions
+
+Add the following permissions to your `android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Only request storage permissions on Android versions below 33 -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <!-- For Android 13+ (API 33+), use the new photo permissions if needed -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        tools:targetApi="33" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    
+    <!-- Other App Components -->
+</manifest>
 ```
 
 ### Add dependency：
