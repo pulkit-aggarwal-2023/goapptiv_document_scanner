@@ -24,15 +24,11 @@ rootProject.allprojects {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 
 android {
-
-    if (project.android.hasProperty("namespace")) {
-        namespace = "com.goapptiv.goapptiv_document_scanner"
-    }
-
-    compileSdkVersion 34
+    namespace = "com.goapptiv.goapptiv_document_scanner"
+    compileSdkVersion 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -43,12 +39,16 @@ android {
         jvmTarget = '1.8'
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 24
     }
 
     buildFeatures {
